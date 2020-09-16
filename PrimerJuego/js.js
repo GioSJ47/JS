@@ -28,6 +28,24 @@
 		var div = '<div id="'+ this.id +'"></div>';
 	}
 	
+	//TECLADO
+	var teclado = {
+		teclas: new Array(),
+		iniciar: function() {
+			document.onkeydown = teclado.guardarTecla;
+		},
+		guardarTecla: function(e){
+			teclado.teclas.push(e.key);
+			console.log("Tecla: " + e.key);
+		},
+		teclaPulsada: function(codigoTecla){
+			return (teclado.teclas.indexOf(codigoTecla) !== -1) ? true : false;
+		},
+		reiniciar: function() {
+			teclado.teclas = new Array();
+		}
+	};
+	
 
 	var buclePrincipal = {
 		idEjecucion: null,
@@ -51,6 +69,7 @@
 			
 		},
 		actualizar: function(registroTemporal){
+			teclado.reiniciar();
 			buclePrincipal.aps++;
 		},
 		dibujar: function(registroTemporal){
@@ -67,6 +86,7 @@
 	var inicio = {
 		iniciarJuego: function(){
 			console.log("Juego iniciado");
+			teclado.iniciar();
 			dimenciones.iniciar();
 			buclePrincipal.iterar();
 		}
