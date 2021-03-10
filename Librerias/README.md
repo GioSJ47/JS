@@ -49,8 +49,8 @@ EJ 2: `obj = {"x":"a", 'q.':'que tal?'};`
 
 **EJ 1:** `arrayAStr(['H', 'O', 'L', 'A']);` -> "HOLA"
 
-**EJ 2:** `var saludo = ['H', 'O', 'L', 'A'];
-arrayAStr(saludo);` -> "HOLA"
+**EJ 2:** ```var saludo = ['H', 'O', 'L', 'A'];
+arrayAStr(saludo);``` -> "HOLA"
 
 ### aMinusculas();
 **DEFINICION:** TANSFORMA TODOS LOS CARACTERES QUE SE ENCUENTRAN EN UN STRING A MINUSCULAS.
