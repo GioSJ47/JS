@@ -1,4 +1,4 @@
-# strings.js
+strings.js
 ==========
 ## INFO:
 	AUTOR: GioSJ
