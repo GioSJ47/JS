@@ -9,7 +9,7 @@
 ## FUNCIONES:
 ### reemplazar();
 DEFINICION: SE USA PARA REEMPLAZAR CARACTERES O CADENAS POR OTRAS.
-EJ 1: reemplazar("Holx q.", {"x":"a", 'q.':'que tal?'}); -> "Hola que tal?"
+EJ 1: ```reemplazar("Holx q.", {"x":"a", 'q.':'que tal?'}); -> "Hola que tal?"```
 EJ 2: obj = {"x":"a", 'q.':'que tal?'};
       reemplazar("Holx q.", obj); -> "Hola que tal?"
 	
