@@ -14,7 +14,7 @@ EJ 1: ```reemplazar("Holx q.", {"x":"a", 'q.':'que tal?'}); -> "Hola que tal?"``
 
 EJ 2: `obj = {"x":"a", 'q.':'que tal?'};`
 
-      `reemplazar("Holx q.", obj);` -> "Hola que tal?"
+&#nbsp;&#nbsp;&#nbsp;`reemplazar("Holx q.", obj);` -> "Hola que tal?"
 	
 ### textoSeguro();
 DEFINICION: INTERCAMBIA LOS SIMBOLOS ESPECIALES POR SU CODIGO HTML CORRESPONDIENTE.
