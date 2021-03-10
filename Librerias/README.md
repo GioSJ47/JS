@@ -1,4 +1,5 @@
-# *strings.js*
+# strings.js
+==========
 ## INFO:
 	AUTOR: GioSJ
 	GITHUB: https://github.com/GioSJ47
