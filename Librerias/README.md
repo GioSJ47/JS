@@ -1,6 +1,5 @@
-strings.js
-==========
-## INFO:
+# strings.js
+## 	INFO:
 	AUTOR: GioSJ
 	GITHUB: https://github.com/GioSJ47
 	VERSION: 1.0
