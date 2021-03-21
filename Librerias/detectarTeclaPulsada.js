@@ -7,14 +7,14 @@ INFO:
 	DESCRIPCION: ESTE SCRIPT PERMITE MODIFICAR STRINGS A TU NECESIDAD.
   
 FORMA DE USO:
-  tecla: almacena la última tecla precionada y permite el funcionamiento de "teclado.accion".
+  tecla: almacena la última tecla presionada y permite el funcionamiento de "teclado.accion".
   
-  teclas: es un array que va almacenando las teclas precionadas en orden.
+  teclas: es un array que va almacenando las teclas presionadas en orden.
   
-  accion: este objeto se usa para almacenar la funcion que se quiere ejecutar cuando se precionen teclas.
+  accion: este objeto se usa para almacenar la funcion que se quiere ejecutar cuando se presionen teclas.
   Ejemplo 1 de uso:
     teclado.accion=function(){
-      console.log("Tecla precionada: " + teclado.tecla);
+      console.log("Tecla presionada: " + teclado.tecla);
     };
   Ejemplo 1 de uso:
     
