@@ -16,10 +16,17 @@ FORMA DE USO:
     teclado.accion=function(){
       console.log("Tecla presionada: " + teclado.tecla);
     };
-  Ejemplo 1 de uso:
+  Ejemplo 2 de uso:
+    function miFuncion(){
+      if(teclado.tecla=="A" || teclado.tecla=="a"){
+	console.log("Se precionó la tecla "A");
+      }
+    }
+    teclado.accion=function(){ miFuncion(); };
     
   iniciar(): esta función inicia el funcionamiento de "teclado". Una vez tenga configurado el funcionamiento
-  dentro de "accion",
+  dentro de "accion", haga que todo funcione con iniciar().
+  
   teclaPulsada(): esta función indica si alguna tecla ya fué pulsada devolviendo true o false.
   Ejemplos de uso:
     teclado.teclaPulsada("a");
