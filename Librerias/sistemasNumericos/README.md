@@ -8,7 +8,7 @@
 ## FUNCIONES:
 ### hexInt():
 Introduce un string con el número en hexadecimal que quieras convertir a número decimal. EJ:
-```
+```javascript
 hexInt("A12F");    //DEVOLVERÁ 41263 decimal
 hexInt("aD3e");    //DEVOLVERÁ 44350 decimal
 hexInt("0x11Ab");  //DEVOLVERÁ 4523 decimal
