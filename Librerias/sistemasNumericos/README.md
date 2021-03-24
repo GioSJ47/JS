@@ -1,12 +1,12 @@
 # hexadecimaDecimal.js
 ## Info
-  AUTOR: Gio
+    AUTOR: Gio
   
-  GIT: https://github.com/GioSJ47
+    GIT: https://github.com/GioSJ47
   
-  FECHA DE CRACION: 2-11-2020 (DD-MM-AAAA)
+    FECHA DE CRACION: 2-11-2020 (DD-MM-AAAA)
   
-  VERSION: b_0.5.1
+    VERSION: b_0.5.1
   
 ## FUNCIONES:
 ### hexInt():
