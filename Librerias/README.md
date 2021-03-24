@@ -20,13 +20,13 @@ Es un array que va almacenando las teclas presionadas en orden.
 Este objeto se usa para almacenar la funcion que se quiere ejecutar cuando se presionen teclas.
 
 Ejemplo 1 de uso:
-```
+```javascript
 teclado.accion=function(){
 	console.log("Tecla presionada: " + teclado.tecla);
 };
 ```
 Ejemplo 2 de uso:
-```
+```javascript
 function miFuncion(){
 	if(teclado.tecla=="A" || teclado.tecla=="a"){
 		console.log("Se precionó la tecla "A");
@@ -43,7 +43,7 @@ Esta función inicia el funcionamiento de "teclado". Una vez tenga configurado e
 
 Esta función indica si alguna tecla ya fué pulsada devolviendo true o false.
   Ejemplos de uso:
-```
+```javascript
 teclado.teclaPulsada("a");
 teclado.teclaPulsada("Enter");
 teclado.teclaPulsada("Shift");
@@ -107,7 +107,7 @@ EJ 2: `obj = {"x":"a", 'q.':'que tal?'};`
 **EJ 1:** `arrayAStr(['H', 'O', 'L', 'A']);` -> "HOLA"
 
 **EJ 2:**
-~~~
+~~~javascript
 var saludo = ['H', 'O', 'L', 'A'];
 arrayAStr(saludo);
 ~~~ 
