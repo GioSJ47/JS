@@ -1,6 +1,3 @@
-/*
-  DE MOMENTO SOLO SIRVE LA MULTIPLICACION
-*/
 function separar(num, str=true){
     num=(num+"").split(".");
     /*
@@ -54,34 +51,37 @@ function o(num){
         a=_o(num, "*");
         let coma=0, ram=Array(2);
         sig=signos([a[0][0], a[1][0]]);
-
-
-        //SE REMUEVEN LOS SIGNOS
-            let negativo=false;
-
-            
-            
+        let negativo=false;
 
         //SE CUENTA LOS LUGARES DESPUES DE LA COMA Y SE UNIFICAN LOS NUMEROS, EJ: 254.03 -> 25403
-            if(a[0][1]){//PRIMER NUMERO
+            //PRIMER NUMERO
+            if(a[0][1]){
                 ram[0]=""+a[0][0];
+
+                //SE RETIRA EL SIGNO NEGATIVO
                 if(ram[0].split("")[0]=="-"){
-                    ram[0]=ram[0].split("").slice(1, ram[0].length).join("");console.log("ram: "+ram[0])
+                    ram[0]=ram[0].split("").slice(1, ram[0].length).join("");
                     negativo=!negativo;
                 }
 
                 coma+=a[0][1].split("").length;
-                ram[0]+=""+a[0][1];console.log("ram: "+ram[0])
-            } else {
+                ram[0]+=""+a[0][1];
+            }
+            else {
                 ram[0]=""+a[0];
+
+                //SE RETIRA EL SIGNO NEGATIVO
                 if(ram[0].split("")[0]=="-"){
-                    ram[0]=ram[0].split("").slice(1, ram[0].length).join("");console.log("ram: "+ram[0])
+                    ram[0]=ram[0].split("").slice(1, ram[0].length).join("");
                     negativo=!negativo;
                 }
             }
 
-            if(a[1][1]){ //SEGUNDO NUMERO
+            //SEGUNDO NUMERO
+            if(a[1][1]){
                 ram[1]=""+a[1][0];
+
+                //SE RETIRA EL SIGNO NEGATIVO
                 if(ram[1].split("")[0]=="-"){
                     ram[1]=ram[1].split("").slice(1, ram[1].length).join("");
                     negativo=!negativo;
@@ -89,26 +89,16 @@ function o(num){
 
                 coma+=a[1][1].split("").length;
                 ram[1]+=""+a[1][1];
-            } else {
+            } 
+            else {
                 ram[1]=""+a[1];
+
+                //SE RETIRA EL SIGNO NEGATIVO
                 if(ram[1].split("")[0]=="-"){
                     ram[1]=ram[1].split("").slice(1, ram[1].length).join("");
                     negativo=!negativo;
                 }
             }
-        
-        //SE DETECTAN LOS NUMEROS NEGATIVOS
-            /*let negativo=false;
-            if(!sig[0]){
-                ram[0]=ram[0].split("").splice(1,ram[0].length-1).join("");
-                negativo=!negativo;
-                
-            }
-            if(!sig[1]){
-                ram[1]=ram[1].split("").splice(1,ram[1].length-1).join("");
-                negativo=!negativo;
-                
-            }*/
 
         //COMA
             let correr=1;
