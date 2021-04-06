@@ -1,0 +1,866 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=0.6, maximum-scale=0.6">
+		
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				background-color: #313131;
+			}
+			
+			
+			
+			#tablero {
+				width: 500px;
+				height: 500px;
+				margin: 20px;
+				margin-top: 125px;
+				border: solid 4px;
+				border-color: #c39e78 #c39e78 #8a4600 #8a4600;
+			}
+			
+			.clarita, .oscura {
+				position: relative;
+				width: 12.5%;
+				height: 12.5%;
+				float: left;
+				background: #e9b16b;
+				display: inline;
+			}
+			
+			.oscura {
+				background: #d07200;
+			}
+            
+            .pieza, .touch {
+                width: 62.5px;
+                height: 62.5px;
+                font-align: center;
+                position: absolute;
+				background-size: 100% 100%;
+            }
+			
+			.touch {
+				display: none;
+			}
+			
+			/*****************/
+			/* PIEZAS NEGRAS */
+			/*****************/
+			#caballoN1, #caballoN2 {
+				background-image: url('caballoN.png');
+			}
+			
+			#torreN1, #torreN2 {
+				background-image: url('torreN.png');
+			}
+			
+			#alfilN1, #alfilN2 {
+				background-image: url('alfilN.png');
+			}
+			
+			#reyN {
+				background-image: url('reyN.png');
+			}
+			
+			#reinaN {
+				background-image: url('reinaN.png');
+			}
+			
+			#peonN1, #peonN2, #peonN3, #peonN4, #peonN5, #peonN6, #peonN7, #peonN8 {
+				background-image: url('peonN.png');
+			}
+			
+			/******************/
+			/* PIEZAS BLANCAS */
+			/******************/
+			#caballoB1, #caballoB2 {
+				background-image: url('caballoB.png');
+			}
+			
+			#torreB1, #torreB2 {
+				background-image: url('torreB.png');
+			}
+			
+			#alfilB1, #alfilB2 {
+				background-image: url('alfilB.png');
+			}
+			
+			#reyB {
+				background-image: url('reyB.png');
+			}
+			
+			#reinaB {
+				background-image: url('reinaB.png');
+			}
+			
+			#peonB1, #peonB2, #peonB3, #peonB4, #peonB5, #peonB6, #peonB7, #peonB8 {
+				background-image: url('peonB.png');
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		<div id="tablero"></div>
+		<script> //DECLARACIONES
+			
+			
+			//EQUIPOS
+			const BLANCAS="BLANCAS", NEGRAS="NEGRAS";
+			
+			//TU EQUIPO
+			const EQUIPO = "EQUIPO";
+			var equipo=BLANCAS;
+			
+			//PUNTO DE VISTA
+			const PUNTO_DE_VISTA = "PUNTO DE VISTA";
+			var puntoDeVista = equipo;
+			
+			
+			
+			//PIEZA SELECCIONADA
+			var seleccionado=false;
+			
+			//IDs DE PIEZAS
+			const PIEZA_B = [ "peonB1", "peonB2", "peonB3", "peonB4", "peonB5", "peonB6", "peonB7", "peonB8", "torreB1", "caballoB1", "alfilB1", "reinaB", "reyB", "alfilB2", "caballoB2", "torreB2" ];
+			const PIEZA_N = [ "peonN1", "peonN2", "peonN3", "peonN4", "peonN5", "peonN6", "peonN7", "peonN8", "torreN1", "caballoN1", "alfilN1", "reinaN", "reyN", "alfilN2", "caballoN2", "torreN2" ];
+			
+			//VIDAS
+			var B_V = [ true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true ];
+			var N_V = [ true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true ];
+			
+			//POSICIONES
+			if(equipo==BLANCAS){
+				//          [-------PEONES-------]  [-----ESPECIALES-----]
+				var B_X = [ 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 ];
+				var B_Y = [ 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1 ];
+				var N_X = [ 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 4, 5, 3, 2, 1 ];
+				var N_Y = [ 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8 ];
+			} else {
+				//          [-------PEONES-------]  [-----ESPECIALES-----]
+				var B_X = [ 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 ];
+				var B_Y = [ 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8 ];
+				var N_X = [ 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 5, 4, 6, 7, 8 ];
+				var N_Y = [ 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1 ];
+			}
+			
+			//PERSONALIZACION, VARIABLES Y CONSTANTES DE AJUSTE
+			const DEF = "DEF";
+			const ERROR = "Error: ";
+			
+			const DESSELECCION = "DESSELECCION";
+			var desseleccion=false;
+			
+			const VER_INFO = "VER INFO";
+			var verInfo=false;
+			
+			const VER_POSICIONES = "VER POSICIONES";
+			var verPosiciones = false;
+			
+			const EDICION="EDICION";
+			var edicion=true;
+			
+			const SEGUIMIENTO ="SEGUIMIENTO";
+			var seguimiento=false;
+			var funcion=false;
+			
+			//EXTRAS
+			var pieza=0;
+			var piezaID="";
+			var touchX=false,touchY=false;
+			
+			var turno=BLANCAS;
+			var jaque = 0; //si es 1 el equipo blanco está en jaque, si es 2 el equipo negro está en jaque
+			var jaqueM = 0;
+			
+			
+			
+			
+		</script>
+		
+		<script>
+        //CONSTANTES DE OPCION
+	const AUTO = "AUTO";
+	const NUMERO = "NUMERO";
+	const ID = "ID";
+	const TIPO="TIPO";
+	const RESET="RESET";
+
+//VARIABLES GENERALES
+var tamano = 62.5; //CUADRICULAS
+var margen = 24;
+var marginTop = 105;
+
+function configuracion(inp, valor){
+	funcion="configuracion";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(valor==true||valor==false){
+		if(inp==DESSELECCION){
+			desseleccion=valor;
+		} else if(inp==VER_INFO){
+			verInfo=valor;
+		} else if(inp==VER_POSICIONES){
+			verPosiciones=valor;
+		} else if(inp==EDICION){
+			edicion=valor;
+		} else if(inp==SEGUIMIENTO){
+			seguimiento=valor;
+		} else {
+			console.log(ERROR+"Configuracion no encontrada, consulte la lista de configuraciones en ejecutando la funcion ayuda()");
+			return false;
+		}
+		return true;
+	} else {
+		console.log(ERROR+"Aun no hay configuraciones que admitan valores no booleanos.");
+	}
+	return false;
+}
+
+
+function Pieza(inp=0, out=AUTO){
+	funcion="Pieza";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(inp==0){
+		inp=pieza;
+	}
+	if(out==AUTO){
+		if(inp>=1&&inp<=16){
+			return PIEZA_B[inp-1];
+		} else if(inp>=17&&inp<=32){
+			return PIEZA_N[inp-17];
+		} else {
+			for(var i=0;i<16;i++){
+				if (PIEZA_B[i]==inp) return i+1;
+				if (PIEZA_N[i]==inp) return i+17;
+			}
+		}
+	} else if(out==NUMERO){
+		if(inp>0&&inp<=32){
+			return inp;
+		} else {
+			for(var i=0;i<16;i++){
+				if (PIEZA_B[i]==inp) return i+1;
+				if (PIEZA_N[i]==inp) return i+17;
+			}
+		}
+	} else if(out==ID){
+		if(inp>=1&&inp<17){
+			return PIEZA_B[inp-1];
+		} else if(inp>=17&&inp<=32){
+			return PIEZA_N[inp-17];
+		} else {
+			for(var i=0;i<16;i++){
+				if(PIEZA_B[i]==inp||PIEZA_N[i]==inp) return inp;
+			}
+		}
+	}
+	if(out==TIPO){
+		if(!Number.isFinite(inp)){
+			for(var i=0;i<16;i++){
+				if(PIEZA_B[i]==inp) return BLANCAS;
+				if(PIEZA_N[i]==inp) return NEGRAS;
+			}
+		}
+		if(inp>=1&&inp<=16){
+			return BLANCAS;
+		} else if(inp>=17&&inp<=32){
+			return NEGRAS;
+		}
+	}
+	if(seguimiento){
+		console.log(ERROR+"La funcion Pieza("+inp+", "+out+"); no encontró la pieza que está buscando.");
+	}
+	return false;
+}
+
+function Seguimiento(inp=false){
+	if(seguimiento){
+		if(inp){
+			console.log(funcion+": "+inp+".");
+		} else {
+			console.log("Función "+funcion+" llamada.");
+		}
+	}
+}
+
+var _armadoX=0;
+var _armadoY=8;
+var _armadoAj=true;
+function Armado(opcion=false){
+	funcion="Armado";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(opcion==RESET){
+		_armadoX=0;
+		_armadoY=8;
+		_armadoAj=true;
+	}else if(_armadoY==0&&!_armadoAj){
+		_armadoX=1;
+		_armadoY=8;
+		_armadoAj=true;
+		return _armadoY;
+	} else if(_armadoX<8&&_armadoAj){
+		_armadoX++;
+		_armadoAj=false;
+		return _armadoX;
+	} else if(!_armadoAj){
+		_armadoAj=true;
+		return _armadoY;
+	} else if(_armadoY>0){
+		_armadoX=1;
+		_armadoY--;
+		_armadoAj=false;
+		return _armadoX;
+	}
+}
+
+function posicion(x=1, y=1, objeto=0){
+	funcion="posicion";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	var objeto=Pieza(objeto, NUMERO);
+	var objetoID=Pieza(objeto, ID);
+	
+	if(objeto){
+		if(Pieza(objeto, TIPO)==BLANCAS&&pieza-1>=0){
+			B_X[pieza-1]=x;
+			B_Y[pieza-1]=y;
+		} else if(pieza-17>=0){
+			N_X[pieza-17]=x;
+			N_Y[pieza-17]=y;
+		}
+		document.getElementById(Pieza(objeto,ID)).style.top = tamano*8-y*tamano+margen+marginTop+"px";
+		document.getElementById(Pieza(objeto,ID)).style.left = x*tamano+margen-tamano+"px";
+	} else if(document.getElementById(objeto)){
+		document.getElementById(objeto).style.top = tamano*8-y*tamano+margen+marginTop+"px";
+		document.getElementById(objeto).style.left = x*tamano+margen-tamano+"px";
+	}
+	
+	
+	
+	return true;
+}
+/*
+function posicion(x=1, y=1, pieza=0){
+	var error=false;
+	if(pieza==0){
+		pieza=piezaID;
+	} else if(pieza>0){
+		if(pieza<17){
+			pieza=PIEZA_B[pieza-1];
+		} else if(pieza<=32){
+			pieza=PIEZA_N[pieza-17];
+		} else {
+			console.log(ERROR+"Numero de pieza no encontrada.");
+			error=true;
+		}
+	}
+	
+	if(!error){
+		document.getElementById(pieza).style.top = tamano*8-y*tamano+margen+"px";
+		document.getElementById(pieza).style.left = x*tamano+margen-tamano+"px";
+		return true;
+	}
+	return false;
+}
+*/
+
+function mover(x=0, y=0){
+	funcion="mover";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(pieza<=PIEZA_B.length){
+		B_X[pieza-1]+=x;
+		B_Y[pieza-1]+=y;
+		posicion(B_X[pieza-1], B_Y[pieza-1], PIEZA_B[pieza-1]);
+	} else {
+		N_X[pieza-17]+=x;
+		N_Y[pieza-17]+=y;
+		posicion(N_X[pieza-17], N_Y[pieza-17], PIEZA_N[pieza-17]);
+	}
+}
+
+function moverDiagonal(orientacion=1, distancia=1){
+	funcion="moverDiagonal";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	var x,y;
+	if(distancia<0){
+		distancia*=-1;
+	}
+	
+	if(orientacion==1){
+		x=1;
+		y=-1;
+	} else if(orientacion==2){
+		x=1;
+		y=1;
+	} else if(orientacion==3){
+		x=-1;
+		y=1;
+	} else {
+		x=-1;
+		y=-1;
+	}
+	
+	document.getElementById(pieza).style.top=parseFloat(document.getElementById(pieza).style.top)+tamano*distancia*y+"px";
+	
+	document.getElementById(pieza).style.left=parseFloat(document.getElementById(pieza).style.left)+tamano*distancia*x+"px";
+}
+
+function invertir(){
+	funcion="invertir";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	for(var i=0;i<16;i++){
+		B_X[i]=9-B_X[i];
+		B_Y[i]=9-B_Y[i];
+		N_X[i]=9-N_X[i];
+		N_Y[i]=9-N_Y[i];
+	}
+	for(var i=0;i<16;i++){
+		posicion(B_X[i],B_Y[i],i+1);
+		posicion(N_X[i],N_Y[i],i+17);
+	}
+	(puntoDeVista==BLANCAS)?puntoDeVista=NEGRAS:puntoDeVista=BLANCAS;
+}
+
+var eliminadasB=Array(), eliminadasN=Array(), eliminadasPeonesB=Array(), eliminadasPeonesN=Array();
+function eliminar(inp=0){
+	funcion="eliminar";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(inp==0){
+		inp=pieza;
+	}
+	if(Pieza(inp)){
+		inp=Pieza(inp, NUMERO);
+		var inpID=Pieza(inp, ID);
+		
+		if(Pieza(inp, TIPO)==BLANCAS){ //SE TRATA DE UNA PIEZA BLANCA
+			if(seguimiento){console.log(funcion+": "+"Se trata de una blanca"+".");}
+			if(inp<=8){ //POSICIONAMIENTO DE PEONES
+				if(seguimiento){console.log(funcion+": "+"Se trata de un peon"+".");}
+				//SE GUARDA LA NUEVA POSICION
+				eliminadasPeonesB[eliminadasPeonesB.length]=inp;
+				
+				posicion(eliminadasPeonesB.length, 9, inp);
+			}else { //POSICIONAMIENTO DE PIEZAS ESPECIALES
+				if(seguimiento){console.log(funcion+": "+"Se trata de una pieza especial"+".");}
+				//SE GUARDA LA NUEVA POSICION
+				eliminadasB[eliminadasB.length]=inp;
+				
+				posicion(eliminadasB.length, 10, inp);
+			}
+		} else { //SE TRATA DE UNA PIEZA NEGRA
+			if(seguimiento){console.log(funcion+": "+"Se trata de una negra"+".");}
+			if(inp<=24){ //POSICIONAMIENTO DE PEONES
+				if(seguimiento){console.log(funcion+": "+"Se trata de un peon"+".");}
+				//SE GUARDA LA NUEVA POSICION
+				eliminadasPeonesN[eliminadasPeonesN.length]=inp;
+				
+				posicion(eliminadasPeonesN.length, 0, inp);
+			} else { //POSICIONAMIENTO DE PIEZAS ESPECIALES
+				if(seguimiento){console.log(funcion+": "+"Se trata de una pieza especial"+".");}
+				//SE GUARDA LA NUEVA POSICION
+				eliminadasN[eliminadasN.length]=inp;
+				
+				posicion(eliminadasN.length, -1, inp);
+			}
+		}
+	} else if(seguimiento) {
+		console.log(funcion+"No se encontró la pieza "+inp+".");
+	}
+	
+}
+
+function unica(val=true){
+	funcion="unica";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(val){
+		if(pieza){
+			for(var i=1; i<=64; i++){
+				eliminar(Pieza(i));
+			}
+			agregar(piezaID);
+		} else {
+			console.log(ERROR+"No hay ninguna pieza seleccionada o especificada.");
+		}
+	} else {
+		for(var i=1; i<=64; i++){
+			agregar(Pieza(i));
+		}
+	}
+}
+
+function agregar(inp=0){
+	funcion="agregar";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(inp==0){
+		inp=piezaID;
+	}
+	document.getElementById(inp).style.display="block";
+}
+
+
+
+
+
+
+
+
+
+//ARMADO
+var tablero="";
+
+
+//CUADRICULADO
+var num1, num2, num3, num4;
+Armado(RESET);
+for(var i=0;i<4;i++){
+	for(var i2=0;i2<4;i2++){
+		num1=Armado();
+		num2=Armado();
+		num3=Armado();
+		num4=Armado();
+		tablero+='<a onmousedown="cuadricula('+num1+', '+num2+', \'BLANCAS\');" class="clarita" id="cuadricula'+num1+num2+'"></a><a onmousedown="cuadricula('+num3+', '+num4+', \'NEGRAS\');" class="oscura" id="cuadricula'+num3+num4+'"></a>';
+	}
+	for(var i3=0;i3<4;i3++){
+		num1=Armado();
+		num2=Armado();
+		num3=Armado();
+		num4=Armado();
+		tablero+='<a onmousedown="cuadricula('+num1+', '+num2+', \'NEGRAS\');" class="oscura" id="cuadricula'+num1+num2+'"></a><a onmousedown="cuadricula('+num3+', '+num4+', \'BLANCAS\');" class="clarita" id="cuadricula'+num3+num4+'"></a>';
+	}
+}
+
+//CEACION DE PIEZAS
+	for(var i=0; i<16;i++){
+		var num1=i+1;
+		var num2=i+17;
+		tablero+='<a onmousedown="seleccionar(\''+PIEZA_B[i]+'\','+num1+');" id="'+PIEZA_B[i]+'" class="pieza"></a>';
+		tablero+='<a onmousedown="seleccionar(\''+PIEZA_N[i]+'\','+num2+');" id="'+PIEZA_N[i]+'" class="pieza"></a>';
+	}
+
+//CREACION DE ZONA TOUCH
+	Armado(RESET);
+	for(var i=0; i<64;i++){
+		num1=Armado();
+		num2=Armado();
+		tablero+='<a onmousedown="touch(\''+num1+'\','+num2+');" id="touch'+num1+num2+'" class="touch"></a>';
+	}
+
+//DIBUJAR TABLERO
+	document.getElementById("tablero").innerHTML=tablero;
+
+/**/
+//POSICIONAMIENTO DE PIEZAS
+	for(var i=0; i<16;i++){
+		posicion(B_X[i], B_Y[i], PIEZA_B[i]);
+		posicion(N_X[i], N_Y[i], PIEZA_N[i]);
+	}
+
+//POSICIONAMIENTO DE ZONAS TOUCH
+	Armado(RESET);
+	for(var i=0; i<64;i++){
+		num1=Armado();
+		num2=Armado();
+		posicion(num1, num2, ("touch"+num1+num2));
+	}
+/**/
+
+
+//DETECCION DE CLICKS
+function seleccionar(_piezaID, _pieza){
+	funcion="seleccionar";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	
+	if(edicion){ //SI ESTA EL MODO EDICION ACTIVADO
+		if(!pieza){ //SI SE ESTÁ SELECCIONANDO UNA PIEZA
+			pieza=_pieza;
+			piezaID=_piezaID;
+		} else { //SI SE ESTÁ SELECCIONANDO UNA PIEZA NUEVA
+			if(pieza==_pieza){ //SI SE TRATA DE LA MISMA PIEZA
+				//SE DESSELECCIONARÁ
+				pieza=0;
+				piezaID="";
+				touchOcultar();
+			} else { //SE TRATA DE OTRA PIEZA, TIENE QUE COMERLA
+				//OBTENER UBICACION DE PIEZA A REMPLAZAR
+				var x, y;
+				if(Pieza(_pieza, TIPO)==BLANCAS){ //SE TRATA DE UNA PIEZA BLANCA
+					x=B_X[Pieza(_pieza, NUMERO)-1];
+					y=B_Y[Pieza(_pieza, NUMERO)-1];
+				} else { //SE TRATA DE UNA PIEZA NEGRA
+					x=N_X[Pieza(_pieza, NUMERO)-17];
+					y=N_Y[Pieza(_pieza, NUMERO)-17];
+				}
+				console.log(x+" "+y);
+				posicion(x, y, piezaID);
+				eliminar(_piezaID);
+				pieza=0;
+				piezaID="";
+				touchOcultar();
+			}
+		}
+	} else {  //MODO JUEGO
+		if(!pieza){ //SI SE ESTÁ SELECCIONANDO UNA PIEZA
+			pieza=_pieza;
+			piezaID=_piezaID;
+		} else { //SI SE ESTÁ SELECCIONANDO UNA PIEZA NUEVA
+			if(pieza==_pieza){ //SI SE TRATA DE LA MISMA PIEZA
+				//SE DESSELECCIONARÁ
+				pieza=0;
+				piezaID="";
+				touchOcultar();
+			} else { //SE TRATA DE OTRA PIEZA
+				//OBTENER UBICACION DE PIEZA A REMPLAZAR
+				var x, y;
+				if(Pieza(_pieza, TIPO)==BLANCAS){ //SE TRATA DE UNA PIEZA BLANCA
+					x=B_X[Pieza(_pieza, NUMERO)-1];
+					y=B_Y[Pieza(_pieza, NUMERO)-1];
+				} else { //SE TRATA DE UNA PIEZA NEGRA
+					x=N_X[Pieza(_pieza, NUMERO)-17];
+					y=N_Y[Pieza(_pieza, NUMERO)-17];
+				}
+				console.log(x+" "+y);
+				posicion(x, y, piezaID);
+				eliminar(_piezaID);
+				pieza=0;
+				piezaID="";
+				touchOcultar();
+			}
+		}
+	}
+}
+
+function cuadricula(x, y, color="none"){
+	funcion="cuadricula";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(edicion&&pieza){
+		posicion(x, y, piezaID);
+		pieza=0;
+		piezaID="";
+	} else {
+		
+	}
+	if(verInfo){
+		console.log("Cuadricula: X="+x+" Y="+y+" | "+((color==BLANCAS)?"Clarita":"Oscura"));
+	}
+}
+
+function touch(x, y){
+	funcion="configuracion";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	if(pieza){ if(seguimiento){console.log(funcion+": "+"IF: Pieza seleccionada"+".");}
+	if(edicion){ if(seguimiento){console.log(funcion+": "+"IF: Modo edicion activado"+".");}
+			var encontrado=Array(3), seguir=true;
+			for(var i=0; i<16; i++){
+				if(B_X[i]==x&&B_Y[i]==y){
+					eliminar(Pieza(i));
+					seguir=false;
+					break;
+				}
+			}
+			if(seguir){
+				for(var i=0; i<16; i++){
+					if(N_X[i]==x&&N_Y[i]==y){
+						eliminar(Pieza(i+17));
+						break;
+					}
+				}
+			}
+			posicion(x, y);
+		} else {
+			
+		}
+		
+	} else {
+		
+	}
+	touchOcultar();
+}
+
+function touchOcultar(){
+	funcion="touchOcultar";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	Armado(RESET);
+	for(var i=0;i<64;i++){
+		document.getElementById("touch"+Armado()+Armado()).style.display="none";
+	}
+}
+
+function ayuda(){
+	funcion="ayuda";
+	if(seguimiento){console.log(funcion+": "+"Llamada"+".");}
+	var info="";
+	
+	info+="Funciones:\n";
+	info+="\tmover(X, Y): Se usa para mover una pieza seleccionada por el tablero desde su pocicion actual.\n\n";
+	info+="\tmoverDiagonal(orientacion, distancia): Se usa para mover una pieza en diagonal.\n\t\tTiene 4 orientaciones: 1. Arriba a la derecha 2. Abajo a la derecha 3. Abajo a la izquierda 4. Arriba a la izquierda.\n\n";
+	info+="\tposicion(X, Y, piezaID): Se usa para posicionar una pieza (ya seleccionada con un click o especificando su numero o ID en el tercer parámetro) en la ubicación especificada del tablero. Si la pieza a mover no existe, la funcion devolverá false, si la operacion fue realizada con exito devolverá true.\n\n";
+	info+="\tinvertir(): Esta funcion invierte el tablero sin alterar la partida, como si lo rotara 180°.\n\n";
+	info+="\teliminar(): Se usa para eliminar la pieza seleccionada.\n\n";
+	info+="\tunica(): Elimina todas las piezas del tablero, excepto la pieza seleccionada.\n\n";
+	info+="\tagregar(piezaID): Agrega una pieza que se encuentre eliminada mediante su ID.\n\n";
+	info+="\tconfiguracion(NOMBRE_DE_CONFIGURACION, valorAEstablecer): Se usa para cambiar las configuraciones del juego o el comportamiento de las piezas.\n\n";
+	
+	info+="\nLista de IDs:\n";
+	info+="\tPiezas blancas: 'peonB1', 'peonB2', 'peonB3', 'peonB4', 'peonB5', 'peonB6', 'peonB7', 'peonB8', 'torreB1', 'caballoB1', 'alfilB1', 'reinaB', 'reyB', 'alfilB2', 'caballoB2', 'torreB2'\n\n";
+	info+="\tPiezas negras: 'peonN1', 'peonN2', 'peonN3', 'peonN4', 'peonN5', 'peonN6', 'peonN7', 'peonN8', 'torreN1', 'caballoN1', 'alfilN1', 'reinaN', 'reyN', 'alfilN2', 'caballoN2', 'torreN2'\n\n";
+	
+	info+="\nLista de configuraciones:\n";
+	info+="\tDESSELECCIONAR: Es una configuracion booleana (solo puede almacenar como valor 'true' o 'false').\n\n";
+	info+="\tVER_INFO: Si establecemos esta configuracion en true, al hacer click sobre una pieza, nos mostrará su información (su ID y el numero de pieza) en consola. Si lo establecemos en false, NO mostrará la informacion de la pieza seleccionada en consola.";
+	info+="";
+	info+="";
+	info+="";
+	
+	console.log(info);
+	return 0.5; //VERSION DEL CODIGO
+}
+
+
+
+
+/*
+function seleccionar(_piezaID, _pieza){
+	seguimiento="seleccionar";
+	Seguimiento();
+	if(edicion){ Seguimiento("IF: Modo edicion activado");
+		if(pieza){ Seguimiento("IF: Hay pieza seleccionada");
+			pieza=0;
+			piezaID="";
+			tipo=false;
+			touchOcultar();
+			if(verInfo){
+				console.log("Pieza: 0");
+			}
+		} else { Seguimiento("IF: No hay pieza seleccionada");
+			pieza=_pieza;
+			piezaID=_piezaID;
+			tipo=Pieza(0,TIPO);
+			if(verInfo){
+				console.log("Pieza: "+piezaID+" | "+pieza+" | X="+((pieza<17) ? B_X[pieza-1] : N_X[pieza-17])+" Y="+((pieza<17) ? B_Y[pieza-1] : N_Y[pieza-17])+" | "+tipo);
+			}
+		}
+		if(tipo==BLANCAS){
+			for(var i=0;i<64;i++){
+				var vaX = Armado();
+				var vaY = Armado();
+				if(!(B_X[pieza-1]==vaX&&B_Y[pieza-1]==vaY)){
+					document.getElementById("touch"+vaX+vaY).style.display="block";
+				}
+			}
+		} else {
+			for(var i=0;i<64;i++){
+				var vaX = Armado();
+				var vaY = Armado();
+				if(!(N_X[pieza-1]==vaX&&N_Y[pieza-1]==vaY)){
+					document.getElementById("touch"+vaX+vaY).style.display="block";
+				}
+			}
+		}
+		
+	} else if(pieza&&desseleccion){ Seguimiento("IF: Modo edicion desactivado, pieza seleccionada, deseleccion activada");
+		pieza=0;
+		piezaID="";
+		tipo=false;
+		Seguimiento("Secuencia de desseleccion");
+		if(verInfo){
+			console.log("Pieza: 0");
+		}
+		touchOcultar(); Seguimiento("Se oculta touch");
+	} else if(true){
+		pieza=_pieza;
+		piezaID=_piezaID;
+		tipo=Pieza(0,TIPO);
+		if(verInfo){
+			console.log("Pieza: "+piezaID+" | "+pieza+" | X="+((pieza<17) ? B_X[pieza-1] : N_X[pieza-17])+" Y="+((pieza<17) ? B_Y[pieza-1] : N_Y[pieza-17])+" | "+tipo);
+		}
+		
+	}
+	 else {
+		if(pieza&&desseleccion){
+			pieza=0;
+			piezaID="";
+			if(verInfo){
+				console.log("Pieza: 0");
+			}
+			touchOcultar();
+		} else {
+			pieza=_pieza;
+			piezaID=_piezaID;
+			if(verInfo){
+				console.log("Pieza: "+piezaID+" | "+pieza+" | X="+((pieza<17) ? B_X[pieza-1] : N_X[pieza-17])+" Y="+((pieza<17) ? B_Y[pieza-1] : N_Y[pieza-17]));
+			}
+			
+		}
+	}
+	
+		
+	
+	//PEONES BLANCOS
+	if(equipo==BLANCAS){
+		if(piezaID=="peonB1" || piezaID=="peonB2" || piezaID=="peonB3" || piezaID=="peonB4" || piezaID=="peonB5" || piezaID=="peonB6" || piezaID=="peonB7" || piezaID=="peonB8"){
+			if(PIEZA_B[pieza-1]==2){
+				
+			} else {
+				
+			}
+		}
+		//PEONES NEGROS
+		if(piezaID=="peonN1" || piezaID=="peonN2" || piezaID=="peonN3" || piezaID=="peonN4" || piezaID=="peonN5" || piezaID=="peonN6" || piezaID=="peonN7" || piezaID=="peonN8"){
+			if(PIEZA_N[pieza-1]==7){
+				
+			} else {
+				
+			}
+		}
+	} else if(equipo==NEGRAS){
+		if(piezaID=="peonB1" || piezaID=="peonB2" || piezaID=="peonB3" || piezaID=="peonB4" || piezaID=="peonB5" || piezaID=="peonB6" || piezaID=="peonB7" || piezaID=="peonB8"){
+			
+		}
+		//PEONES NEGROS
+		if(piezaID=="peonN1" || piezaID=="peonN2" || piezaID=="peonN3" || piezaID=="peonN4" || piezaID=="peonN5" || piezaID=="peonN6" || piezaID=="peonN7" || piezaID=="peonN8"){
+			
+		}
+	}
+	//TORRES
+	if(piezaID=="torreB1"||piezaID=="torreB2"||piezaID=="torreN1"||piezaID=="torreN2"){
+		
+	}
+	//CABALLOS
+	else if(piezaID=="caballoB1"||piezaID=="caballoB2"||piezaID=="caballoN1"||piezaID=="caballoN2"){
+		
+	}
+	//ALFILES
+	else if(piezaID=="alfilB1"||piezaID=="alfilB2"||piezaID=="alfilN1"||piezaID=="alfilN2"){
+		
+	}
+	else if(piezaID=="reinaB"||piezaID=="reinaN"){
+		
+	}
+	else if(piezaID=="reyB"||piezaID=="reyN"){
+		
+	} else {
+		console.log("Error al seleccionar pieza, no se encontró.");
+	}
+	
+}*/
+
+var asdmsg=1;
+function dialogo(mensaje){
+	
+	if(asdmsg==1){
+		console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+mensaje+"\nIA:  Es tu culpa, vos me programaste mal.");
+	} else {
+		console.log("IA:  ;)");
+	}
+	asdmsg++;
+}
+        </script>
+		
+		
+		
+		
+	
+</body></html>
