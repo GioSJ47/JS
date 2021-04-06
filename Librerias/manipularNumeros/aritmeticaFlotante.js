@@ -1,3 +1,50 @@
+/*
+INFO:
+    AUTOR: GioSJ
+	GITHUB: https://github.com/GioSJ47
+	VERSION: 0.2.4
+	FECHA: 06/04/2021 (DD/MM/AAAA)
+	DESCRIPCION: Devido a los errores de impresicion de JavaScript a la hora de
+        operar con numero decimales (con coma o punto) se desarrolló este código
+        para poder realizar operaciones aritmeticas (sumas, restas,
+        multiplicaciones y divisiones) con presicion.
+    
+    NOTA 1: En esta versión del código, la función o() solo puede realizar
+        multiplicaciones.
+    NOTA 2: La función o() NO es capaz de realizar más de una operación a la vez.
+        
+    FORMA DE USO: La única funcion que te interesa de este código es o(), simplemente 
+        tienes que introducir en su primer parametro la operacion que quieres realizar.
+    
+    EJEMPLOS DE LA FUNCION o():
+        //COLOCA ESPACIOS DONDE SE TE ANTOJE
+            o("100*1.1");      //110
+            o("100 * 1.1");    //110
+            o(" 1 00* 1 . 1"); //110
+            
+        //TRABAJA CON NUMEROS NEGATIVOS SIN MIEDO
+            o("-100 * 1.1");   //-110
+            o("100 * -1.1");   //-110
+            o("-100 * -1.1);   //110
+        
+        //OTROS EJEMPLOS
+            o(100 + "*1.1");   //110
+            
+            var num = -0.1;
+            o("100 *" + num);  //-10
+            
+            o("
+        
+*/
+
+function reemplazar(cadena, obj) {
+    Object.keys(obj).forEach(el => {
+        const reg=new RegExp(el, "gi")
+        cadena=cadena.replace(reg, obj[el]);
+    });
+    return cadena;
+}
+
 function separar(num, str=true){
     num=(num+"").split(".");
     /*
@@ -37,6 +84,7 @@ function _o(num, sig){
 
 //var S="S", R="R", D="D", M="M";
 function o(num){
+    num=reemplazar(num, {" ":""});
     let ram=(""+num).split("");
     let res;
     let sig=Array(2);
