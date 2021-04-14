@@ -1,0 +1,15 @@
+
+
+<script>
+  function enviar(archivo, variable, valor, f){
+    var dataString = variable+'='+valor;
+    $.ajax({
+      type: "POST",
+      url: archivo,
+      data: dataString,
+      success: function() {
+        f;
+      }
+    });
+  }
+</script>
