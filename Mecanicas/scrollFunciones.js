@@ -2,6 +2,8 @@
 DEFINICION DE SCROLL:
   Se denomina Scroll (desplazamiento 2D) al desplazamiento de arriba a abajo (vertical) o de
   lado a lado (horizontal) de los contenidos que forman una página web, una app, etc.
+
+A continuacion se trabajará con los scrolls verticales.
 */
 
 
@@ -13,7 +15,7 @@ DEFINICION DE SCROLL:
 
 
 
-//Para obtener la posicion donde se encuentra el scroll
+//Para obtener la posicion donde se encuentra actualmente el scroll
   function scrollY(e){
     return e.scrollHeight*(e.scrollTop/(e.scrollTop+e.clientHeight))
   }
@@ -31,16 +33,13 @@ DEFINICION DE SCROLL:
 
 
 
-//Para avanzar desde la posicion actual del scroll
+//Para avanzar desde la posicion actual del scroll 150px mas abajo
   document.getElementById("miElemento").scrollTop = scrollY(document.getElementById("miElemento")) + 150; //Posicion actual + 150px
 
 
 
-//Detectar cuando el usuario usa un scroll
+//Detectar cuando el usuario usa el scroll
   document.getElementById("miElemento").addEventListener('scroll', function(e) {
-    //EL CODIGO QUE SE TIENE QUE EJECUTAR CUANDO SE USE UN SCROLL
+    //COLOCA AQUÍ EL CODIGO QUE SE TIENE QUE EJECUTAR CUANDO SE USE UN SCROLL
   }
-
-
-
-//
+ 
