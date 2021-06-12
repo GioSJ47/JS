@@ -29,7 +29,18 @@ A continuacion se trabajará con los scrolls verticales.
 
 
 //Para dirigir el scroll CON UN EFECTO DE SUAVIDAD a una posicion
-  document.getElementById("miElemento").scroll({ top: 150, behavior: 'smooth' });
+  function scrollTopB(e, pos){
+    if(e&&pos>=0){
+      e.scroll({
+        top: pos,
+        behavior: 'smooth'
+      });
+      return true;
+    } else{
+      return false;
+    }
+  }
+  //EJ: scrollTopB(document.getElementById("miElemento"), 150);
 
 
 
