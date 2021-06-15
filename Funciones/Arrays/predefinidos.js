@@ -13,6 +13,12 @@
  var arr = [ 1, 2, 3, 4 ]
 
 
+//ACCEDER AL VALOR ALMACENADO EN UNA POSICION
+ var arr = [ 1, 2, 3, 4 ]
+ arr[0] // 1
+ arr[3] // 4
+
+
 //VER CUANTOS ELEMENTOS ALMACENA UN ARRAY
  var arr = [ 1, 2, 3, 4 ]
  arr.length // 4
@@ -45,11 +51,11 @@
  var arr = [ 1, 2, 3, 4 ]
  arr.pop() // [ 1, 2, 3 ]
 
-//OMITIR GRUPO DE VALORES DESDE EL PRINCIPIO Y RECUPERA LOS VALORES DESDE DONDE SE ESPECIFICA; parametro: (desde)
+//RECUPERA LOS VALORES DESDE LA POSICION ESPECIFICADA; parametro: (desde)
  var arr = [ 1, 2, 3, 4 ]
  arr = arr.slice(2) // [ 3, 4 ]
 
-//OMITIR VALORES AL PRINCIPIO Y AL FINAL; parametros: (desde, hasta antes de)
+//RECUPERA LOS VALORES DESDE LA POSICION ESPECIFICADA HASTA EL ANTERIOR DE LA SEGUNDA POSICION ESPECIFICADA; parametros: (desde, hasta antes de)
  var arr = [ 1, 2, 3, 4, 5, 6 ]
  arr = arr.slice(2, 5) // [ 3, 4, 5 ]
 
