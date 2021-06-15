@@ -12,9 +12,20 @@
  var arr = new Array(1, 2, 3, 4)
  var arr = [ 1, 2, 3, 4 ]
 
+
 //VER CUANTOS ELEMENTOS ALMACENA UN ARRAY
  var arr = [ 1, 2, 3, 4 ]
  arr.length // 4
+
+
+//REEMPLAZAR PRIMER ELEMENTO
+ var arr = [ 1, 2, 3, 4 ]
+ arr[0] = "A" // [ "A", 2, 3, 4 ]
+
+//REEMPLAZAR ULTIMO ELEMENTO
+ var arr = [ 1, 2, 3, 4 ]
+ arr[arr.length-1] = "Z" // [ 1, 2, 3, "Z" ]
+
 
 //AGREGAR UN VALOR AL PRINCIPIO
  var arr = [ 1, 2, 3, 4 ]
@@ -25,6 +36,7 @@
  arr.push(5)         // [ 1, 2, 3, 4, 5 ]
  arr[arr.length] = 6 // [ 1, 2, 3, 4, 5, 6 ]
 
+
 //ELIMINAR EL PRIMER ELEMENTO
  var arr = [ 1, 2, 3, 4 ]
  arr.shift(); // [ 1, 2, 3 ]
@@ -33,7 +45,32 @@
  var arr = [ 1, 2, 3, 4 ]
  arr.pop() // [ 1, 2, 3 ]
 
- 
+//OMITIR GRUPO DE VALORES DESDE EL PRINCIPIO Y RECUPERA LOS VALORES DESDE DONDE SE ESPECIFICA; parametro: (desde)
+ var arr = [ 1, 2, 3, 4 ]
+ arr = arr.slice(2) // [ 3, 4 ]
+
+//OMITIR VALORES AL PRINCIPIO Y AL FINAL; parametros: (desde, hasta antes de)
+ var arr = [ 1, 2, 3, 4, 5, 6 ]
+ arr = arr.slice(2, 5) // [ 3, 4, 5 ]
+
+
+//AGREGAR VALOR INTERMEDIO; parametros: splice(posicion, elementos a sobreescribir, [valor1, valor2, ...])
+ var arr = [ 1, 2, 3, 4 ]
+ arr = arr.splice(1, 0, "A", "B") // [ 1, "A", "B", 2, 3, 4 ]
+
+ var arr = [ 1, 2, 3, 4 ]
+ arr = arr.splice(1, 1, "A", "B") // [ 1, "A", "B", 3, 4 ] 
+
+ var arr = [ 1, 2, 3, 4 ]
+ arr = arr.splice(1, 2, "A", "B") // [ 1, "A", "B", 4 ]
+
+
+//FUCIONAR ARRAYS (CONCATENAR)
+ var a = [ 1, 2, 3 ]
+ var b = [ "A", "B", "C" ]
+ var ab = a.concat(b) // ab = [ 1, 2, 3, "A", "B", "C" ]
+
+
 //RECONOCER SI SE TRATA DE UN ARRAY/OBJETO
  let arr = [ 1, 2, 3, 4 ]; 
  typeof arr == "object" //true
