@@ -51,6 +51,7 @@
  var arr = [ 1, 2, 3, 4 ]
  arr.pop() // [ 1, 2, 3 ]
 
+
 //RECUPERA LOS VALORES DESDE LA POSICION ESPECIFICADA; parametro: (desde)
  var arr = [ 1, 2, 3, 4 ]
  arr = arr.slice(2) // [ 3, 4 ]
@@ -69,6 +70,17 @@
 
  var arr = [ 1, 2, 3, 4 ]
  arr = arr.splice(1, 2, "A", "B") // [ 1, "A", "B", 4 ]
+
+
+//BUSCAR PRIMERA POSICION DE UN VALOR
+ var arr = [ 1, 2, 3, 4, 3 ]
+ arr.indexOf(3)  //  2
+ arr.indexOf(10) // -1
+
+//BUSCAR ULTIMA POSICION DE UN VALOR
+ var arr = [ 1, 2, 3, 4, 3 ]
+ arr.lastIndexOf(3)  //  4
+ arr.lastIndexOf(10) // -1
 
 
 //FUCIONAR ARRAYS (CONCATENAR)
