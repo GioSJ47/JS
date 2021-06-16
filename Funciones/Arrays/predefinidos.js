@@ -87,6 +87,16 @@
  var a = [ 1, 2, 3 ]
  var b = [ "A", "B", "C" ]
  var ab = a.concat(b) // ab = [ 1, 2, 3, "A", "B", "C" ]
+ 
+//FUCIONAR TODOS LOS VALORES DE UN ARRAY EN UN STRING
+ var arr = [ 1, 2, 3, 4 ]
+ arr = arr.join() // "1,2,3,4"
+
+ var arr = [ 1, 2, 3, 4 ]
+ arr = arr.join("") // "1234"
+
+ var arr = [ 1, 2, 3, 4 ]
+ arr = arr.join(" ; ") // "1 ; 2 ; 3 ; 4"
 
 
 //RECONOCER SI SE TRATA DE UN ARRAY/OBJETO
@@ -96,5 +106,3 @@
 //RECONOCER SI SE TRATA DE UN ARRAY
  let arr = [ 1, 2, 3, 4 ]; 
  Array.isArray(arr) //true
-
-//
