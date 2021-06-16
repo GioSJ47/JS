@@ -100,9 +100,9 @@
 
 
 //RECONOCER SI SE TRATA DE UN ARRAY/OBJETO
- let arr = [ 1, 2, 3, 4 ]; 
+ var arr = [ 1, 2, 3, 4 ]; 
  typeof arr == "object" //true
 
 //RECONOCER SI SE TRATA DE UN ARRAY
- let arr = [ 1, 2, 3, 4 ]; 
+ var arr = [ 1, 2, 3, 4 ]; 
  Array.isArray(arr) //true
