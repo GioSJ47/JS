@@ -33,20 +33,28 @@ function trig (datos, formato, out=false){
 		//COSENO
 		if(h(formato, "A") || h(out, "A")){
 			if(x=="H"){
-				return m("A") / Math.sin(m("G"))
+				return m("A") / Math.cos(m("G"))
 			}
 			if(x=="A"){
-				return m("H") * Math.sin(m("G"))
+				return m("H") * Math.cos(m("G"))
 			}
 			if(x=="G"){
-				return Math.asin(m("A") / m("H"))
+				return Math.acos(m("A") / m("H"))
 			}
 		}		
   } else
 
 	//TANGENTE
 	if((h(formato, "A")||h(out, "A")) && (h(formato, "O")||h(out, "O"))){
-    
+    if(x=="A"){
+				return m("O") / Math.tan(m("G"))
+			}
+			if(x=="O"){
+				return m("A") * Math.tan(m("G"))
+			}
+			if(x=="G"){
+				return Math.atan(m("O") / m("A"))
+			}
   }
 
 	else {
