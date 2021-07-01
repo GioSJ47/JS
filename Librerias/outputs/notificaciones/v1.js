@@ -1,6 +1,6 @@
 /*
     Script creado el 01/07/2021 (dd/mm/aaaa) por GioSJ
-    Código en GitHub: 
+    Código en GitHub: https://github.com/GioSJ47/JS/tree/master/Librerias/outputs/notificaciones/v1.js
 */
 
 ///////////////////////////
