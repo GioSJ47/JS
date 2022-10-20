@@ -1,0 +1,37 @@
+<input id="NUMERO" type="text" placeholder="Ingresa numero...">
+<input id="BASE" value="8" type="number" style="width: 50px;" placeholder="Base" min="2" max="16"><br><br>
+<input id="RESULTADO" readonly placeholder="Resultado..."><br><br>
+<input id="NUMERO_BOTON" value="Calcular" type="submit">
+
+<script>
+    function aDecimal(numero, base) {
+        numero = Array.from(String(numero).toUpperCase());
+        base = parseInt(base);
+        var valor = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' ];
+
+        if (base > 1 && base < valor.length + 1) {
+            var res = 0;
+            var peso = 1;
+
+            for (let i = numero.length - 1; i >= 0; i--) {
+                let a = valor.indexOf(numero[i]);
+
+                if (a != -1 && a < base) {
+                    res  += a * peso;
+                    peso *= base;
+                } else {
+                    return false;
+                }
+            }
+
+            return res;
+        }
+        
+        return undefined;
+    }
+
+    //CLICK EN BOTON "Calcular"
+    document.getElementById("NUMERO_BOTON").addEventListener("click", () => {
+        document.getElementById("RESULTADO").value = aDecimal(document.getElementById("NUMERO").value, document.getElementById("BASE").value);
+    });
+</script>
